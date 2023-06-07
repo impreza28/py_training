@@ -2,7 +2,10 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+.pytest_cache
+__pycahe__/
+logs/*
+test_results/
 # C extensions
 *.so
 

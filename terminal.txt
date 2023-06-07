@@ -1,0 +1,2 @@
+# python -m pytest --alluredir=test_results/ test_add_group.py
+# allure serve test_results
