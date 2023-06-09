@@ -13,6 +13,6 @@ def app(request):
 @allure.description("Авторизация и добавление нового контакта")
 def test_add_contact(app):
 
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_contact(Contact(firstname="Lara", middlename="Sergeevna", lastname="Kroft"))
     app.return_to_home_page()

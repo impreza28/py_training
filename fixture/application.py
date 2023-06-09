@@ -2,12 +2,13 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import allure
-
+from fixture.session import SessionHelper
 
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
         self.vars = {}
+        self.session = SessionHelper(self)
 
     def destroy(self):
         self.wd.quit()
@@ -28,14 +29,7 @@ class Application:
         with allure.step('Нажать кнопку Enter'):
             self.wd.find_element(By.XPATH, "(//input[@name=\'submit\'])[2]").click()
 
-    def login(self, username, password):
-        self.open_home_page()
-        with allure.step('Ввести логин'):
-            self.wd.find_element(By.NAME, "user").send_keys(username)
-        with allure.step('Ввести пароль'):
-            self.wd.find_element(By.NAME, "pass").send_keys(password)
-        with allure.step('Нажать кнопку Login'):
-            self.wd.find_element(By.XPATH, "//input[@value=\'Login\']").click()
+
 
     def open_home_page(self):
         with allure.step('Открытие страницы addressbook'):
@@ -43,9 +37,6 @@ class Application:
         with allure.step('Открытие окна браузера на полный экран'):
             self.wd.set_window_size(2062, 1126)
 
-    def logout(self):
-        with allure.step('Нажать на ссылку Logout'):
-            self.wd.find_element(By.LINK_TEXT, "Logout").click()
 
     def return_to_groups_page(self):
         with allure.step('Нажать на ссылку group page для возврата в список групп'):
