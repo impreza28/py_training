@@ -41,3 +41,22 @@ class GroupHelper:
         with allure.step('Нажать кнопку Delete group'):
             wd.find_element(By.NAME, "delete").click()
         self.return_to_groups_page()
+
+    def select_first_group(self):
+        with allure.step('Выбрать группу'):
+            wd = self.app.wd
+            wd.find_element(By.NAME, "selected[]").click()
+
+    def modify_group(self, group):
+        wd = self.app.wd
+        with allure.step('Нажать на кнопку Edit group'):
+            wd.find_element(By.NAME, "edit").click()
+        with allure.step('Ввести group_name'):
+            wd.find_element(By.NAME, "group_name").send_keys(group.name)
+        with allure.step('Ввести group_header'):
+            wd.find_element(By.NAME, "group_header").send_keys(group.header)
+        with allure.step('Ввести group_footer'):
+            wd.find_element(By.NAME, "group_footer").send_keys(group.footer)
+        with allure.step('Нажать кнопку Update'):
+            wd.find_element(By.NAME, "update").click()
+        self.return_to_groups_page()

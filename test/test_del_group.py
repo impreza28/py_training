@@ -1,6 +1,4 @@
-
 import allure
-
 
 @allure.epic("Тесты удаления групп")
 @allure.description("Авторизация и удаление 1й группы")
