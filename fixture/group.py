@@ -31,3 +31,13 @@ class GroupHelper:
         wd = self.app.wd
         with allure.step('Перейти в Группы'):
             wd.find_element(By.LINK_TEXT, "groups").click()
+
+    def delete_first_group(self):
+        wd = self.app.wd
+        with allure.step('Перейти в Группы'):
+            wd.find_element(By.LINK_TEXT, "groups").click()
+        with allure.step('Выбрать группу'):
+            wd.find_element(By.NAME, "selected[]").click()
+        with allure.step('Нажать кнопку Delete group'):
+            wd.find_element(By.NAME, "delete").click()
+        self.return_to_groups_page()
