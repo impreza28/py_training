@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import allure
+from model import contact
 
 
 class ContactHelper:
@@ -25,3 +26,26 @@ class ContactHelper:
         wd = self.app.wd
         with allure.step('Нажать на ссылку open home page'):
             wd.find_element(By.LINK_TEXT, "home page").click()
+
+    def delete_first_contact(self):
+        wd = self.app.wd
+        with allure.step('Выбрать первый контакт'):
+            wd.find_element(By.NAME, "selected[]").click()
+        with allure.step('Нажать кнопку Delete'):
+            wd.find_element(By.XPATH, "(//input[@value=\'Delete\'])").click()
+        with allure.step('Нажать кнопку ОК в сообщении "Delete 1 addresses?"'):
+            wd.switch_to.alert.accept()
+    def modify_first_contact(self, contact):
+        wd = self.app.wd
+        with allure.step('Выбрать первый контакт'):
+            wd.find_element(By.XPATH, "//img[@alt=\'Edit\']").click()
+        with allure.step('Ввести firstname'):
+            wd.find_element(By.NAME, "firstname").send_keys(contact.firstname)
+        with allure.step('Ввести middlename'):
+            wd.find_element(By.NAME, "middlename").send_keys(contact.middlename)
+        with allure.step('Ввести lastname'):
+            wd.find_element(By.NAME, "lastname").send_keys(contact.lastname)
+        with allure.step('Нажать кнопку Update'):
+            wd.find_element(By.XPATH, "(//input[@name=\'update\'])").click()
+
+
