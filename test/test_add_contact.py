@@ -9,3 +9,4 @@ def test_add_contact(app):
     app.contact.create_contact(Contact(firstname="Lara", middlename="Sergeevna", lastname="Kroft"))
     app.contact.return_to_home_page()
     app.session.logout()
+

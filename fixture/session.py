@@ -2,7 +2,8 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import allure
-
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 class SessionHelper:
     def __init__(self, app):
@@ -22,3 +23,5 @@ class SessionHelper:
         wd = self.app.wd
         with allure.step('Нажать на ссылку Logout'):
             wd.find_element(By.LINK_TEXT, "Logout").click()
+        WebDriverWait(wd, 10).until(lambda x: x.find_element(By.NAME, "user"))
+
