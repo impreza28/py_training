@@ -51,12 +51,20 @@ class GroupHelper:
         wd = self.app.wd
         with allure.step('Нажать на кнопку Edit group'):
             wd.find_element(By.NAME, "edit").click()
-        with allure.step('Ввести group_name'):
-            wd.find_element(By.NAME, "group_name").send_keys(group.name)
-        with allure.step('Ввести group_header'):
-            wd.find_element(By.NAME, "group_header").send_keys(group.header)
-        with allure.step('Ввести group_footer'):
-            wd.find_element(By.NAME, "group_footer").send_keys(group.footer)
+        self.fill_group_form(group)
         with allure.step('Нажать кнопку Update'):
             wd.find_element(By.NAME, "update").click()
         self.return_to_groups_page()
+
+    def fill_group_form(self, group):
+        wd = self.app.wd
+        self.change_field_value("group_name", group.name)
+        self.change_field_value("group_header", group.header)
+        self.change_field_value("group_footer", group.footer)
+
+    def change_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            with allure.step(f'Ввести {field_name}'):
+                wd.find_element(By.NAME, field_name).clear()
+                wd.find_element(By.NAME, field_name).send_keys(text)
