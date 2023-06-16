@@ -68,3 +68,8 @@ class GroupHelper:
             with allure.step(f'Ввести {field_name}'):
                 wd.find_element(By.NAME, field_name).clear()
                 wd.find_element(By.NAME, field_name).send_keys(text)
+
+    def count_groups(self):
+        wd = self.app.wd
+        return len(wd.find_elements(By.NAME, "selected[]"))
+

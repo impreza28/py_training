@@ -57,4 +57,8 @@ class ContactHelper:
         with allure.step('Нажать на ссылку Home для перехода на главную страницу'):
             wd.find_element(By.LINK_TEXT, "home").click()
 
+    def count_contacts(self):
+        wd = self.app.wd
+        return len(wd.find_elements(By.NAME, "selected[]"))
+
 
