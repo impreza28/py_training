@@ -10,6 +10,8 @@ class GroupHelper:
 
     def return_to_groups_page(self):
         wd = self.app.wd
+        if wd.current_url.endswith("/group.php") and len(wd.find_elements(By.NAME, "new"))>0:
+            return
         with allure.step('Нажать на ссылку group page для возврата в список групп'):
             wd.find_element(By.LINK_TEXT, "group page").click()
 
@@ -29,6 +31,8 @@ class GroupHelper:
 
     def open_group_page(self):
         wd = self.app.wd
+        if wd.current_url.endswith("/group.php") and len(wd.find_elements(By.NAME, "new"))>0:
+            return
         with allure.step('Перейти в Группы'):
             wd.find_element(By.LINK_TEXT, "groups").click()
 

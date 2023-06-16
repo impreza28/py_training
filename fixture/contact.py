@@ -31,6 +31,8 @@ class ContactHelper:
 
     def return_to_home_page(self):
         wd = self.app.wd
+        if len(wd.find_elements(By.XPATH,"//input[@value=\'Delete\']"))>0 and len(wd.find_elements(By.XPATH, "//input[@value=\'Send e-Mail\']"))>0:
+            return
         with allure.step('Нажать на ссылку open home page'):
             wd.find_element(By.LINK_TEXT, "home page").click()
 
@@ -42,7 +44,7 @@ class ContactHelper:
     def delete_contact(self):
         wd = self.app.wd
         with allure.step('Нажать кнопку Delete'):
-            wd.find_element(By.XPATH, "(//input[@value=\'Delete\'])").click()
+            wd.find_element(By.XPATH, "//input[@value=\'Delete\']").click()
         with allure.step('Нажать кнопку ОК в сообщении "Delete 1 addresses?"'):
             wd.switch_to.alert.accept()
     def modify_contact(self, contact):
@@ -54,6 +56,8 @@ class ContactHelper:
             wd.find_element(By.XPATH, "(//input[@name=\'update\'])").click()
     def open_contact_page(self):
         wd = self.app.wd
+        if len(wd.find_elements(By.XPATH,"//input[@value=\'Delete\']"))>0 and len(wd.find_elements(By.XPATH,"//input[@value=\'Send e-Mail\']"))>0:
+            return
         with allure.step('Нажать на ссылку Home для перехода на главную страницу'):
             wd.find_element(By.LINK_TEXT, "home").click()
 
