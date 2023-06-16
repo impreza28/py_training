@@ -6,6 +6,7 @@ from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
 
+
 class Application:
     def __init__(self):
         self.wd = webdriver.Firefox()
@@ -23,7 +24,9 @@ class Application:
         with allure.step('Открытие окна браузера на полный экран'):
             self.wd.set_window_size(2062, 1126)
 
-
-
-
-
+    def is_valid(self):
+        try:
+            self.wd.current_url
+            return True
+        except:
+            return False

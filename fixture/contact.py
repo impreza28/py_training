@@ -20,10 +20,13 @@ class ContactHelper:
     def contact_fields_filling(self, contact):
         wd = self.app.wd
         with allure.step('Ввести firstname'):
+            wd.find_element(By.NAME, "firstname").clear()
             wd.find_element(By.NAME, "firstname").send_keys(contact.firstname)
         with allure.step('Ввести middlename'):
+            wd.find_element(By.NAME, "middlename").clear()
             wd.find_element(By.NAME, "middlename").send_keys(contact.middlename)
         with allure.step('Ввести lastname'):
+            wd.find_element(By.NAME, "lastname").clear()
             wd.find_element(By.NAME, "lastname").send_keys(contact.lastname)
 
     def return_to_home_page(self):
