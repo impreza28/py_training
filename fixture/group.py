@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import allure
-
+from model.group import Group
 
 class GroupHelper:
     def __init__(self, app):
@@ -76,4 +76,17 @@ class GroupHelper:
     def count_groups(self):
         wd = self.app.wd
         return len(wd.find_elements(By.NAME, "selected[]"))
+
+    def get_group_list(self):
+        wd = self.app.wd
+        self.open_group_page()
+        list_group = []
+        for element in wd.find_elements(By.CSS_SELECTOR, "span.group"):
+            text = element.text
+            id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+            list_group.append(Group(name=text, id=id))
+        return list_group
+
+
+
 
