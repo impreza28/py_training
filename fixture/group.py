@@ -28,6 +28,7 @@ class GroupHelper:
         with allure.step('Нажать кнопку Enter information'):
             wd.find_element(By.NAME, "submit").click()
         self.return_to_groups_page()
+        self.group_cache= None
 
     def open_group_page(self):
         wd = self.app.wd
@@ -45,6 +46,7 @@ class GroupHelper:
         with allure.step('Нажать кнопку Delete group'):
             wd.find_element(By.NAME, "delete").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def select_first_group(self):
         with allure.step('Выбрать группу'):
@@ -59,6 +61,7 @@ class GroupHelper:
         with allure.step('Нажать кнопку Update'):
             wd.find_element(By.NAME, "update").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def fill_group_form(self, group):
         wd = self.app.wd
@@ -77,15 +80,19 @@ class GroupHelper:
         wd = self.app.wd
         return len(wd.find_elements(By.NAME, "selected[]"))
 
+    group_cache = None
     def get_group_list(self):
-        wd = self.app.wd
-        self.open_group_page()
-        list_group = []
-        for element in wd.find_elements(By.CSS_SELECTOR, "span.group"):
-            text = element.text
-            id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-            list_group.append(Group(name=text, id=id))
-        return list_group
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_group_page()
+            self.group_cache = []
+            for element in wd.find_elements(By.CSS_SELECTOR, "span.group"):
+                text = element.text
+                id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+                self.group_cache.append(Group(name=text, id=id))
+        return list(self.group_cache)
+
+
 
 
 
