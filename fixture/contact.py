@@ -44,9 +44,12 @@ class ContactHelper:
         WebDriverWait(wd, 10).until(lambda x: x.find_element(By.ID, "maintable"))
 
     def select_first_contact(self):
+        self.select_contact_by_index(0)
+
+    def select_contact_by_index(self, index):
         wd = self.app.wd
         with allure.step('Выбрать первый контакт'):
-            wd.find_element(By.NAME, "selected[]").click()
+            wd.find_elements(By.NAME, "selected[]")[index].click()
 
     def delete_contact(self):
         wd = self.app.wd
