@@ -4,13 +4,14 @@ from selenium.webdriver.common.by import By
 import allure
 from model.group import Group
 
+
 class GroupHelper:
     def __init__(self, app):
         self.app = app
 
     def return_to_groups_page(self):
         wd = self.app.wd
-        if wd.current_url.endswith("/group.php") and len(wd.find_elements(By.NAME, "new"))>0:
+        if wd.current_url.endswith("/group.php") and len(wd.find_elements(By.NAME, "new")) > 0:
             return
         with allure.step('Нажать на ссылку group page для возврата в список групп'):
             wd.find_element(By.LINK_TEXT, "group page").click()
@@ -28,25 +29,32 @@ class GroupHelper:
         with allure.step('Нажать кнопку Enter information'):
             wd.find_element(By.NAME, "submit").click()
         self.return_to_groups_page()
-        self.group_cache= None
+        self.group_cache = None
 
     def open_group_page(self):
         wd = self.app.wd
-        if wd.current_url.endswith("/group.php") and len(wd.find_elements(By.NAME, "new"))>0:
+        if wd.current_url.endswith("/group.php") and len(wd.find_elements(By.NAME, "new")) > 0:
             return
         with allure.step('Перейти в Группы'):
             wd.find_element(By.LINK_TEXT, "groups").click()
 
     def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
         wd = self.app.wd
         with allure.step('Перейти в Группы'):
             wd.find_element(By.LINK_TEXT, "groups").click()
-        with allure.step('Выбрать группу'):
-            wd.find_element(By.NAME, "selected[]").click()
+        self.select_group_by_index(index)
         with allure.step('Нажать кнопку Delete group'):
             wd.find_element(By.NAME, "delete").click()
         self.return_to_groups_page()
         self.group_cache = None
+
+    def select_group_by_index(self, index):
+        with allure.step('Выбрать группу'):
+            wd = self.app.wd
+            wd.find_elements(By.NAME, "selected[]")[index].click()
 
     def select_first_group(self):
         with allure.step('Выбрать группу'):
@@ -81,6 +89,7 @@ class GroupHelper:
         return len(wd.find_elements(By.NAME, "selected[]"))
 
     group_cache = None
+
     def get_group_list(self):
         if self.group_cache is None:
             wd = self.app.wd
@@ -91,9 +100,3 @@ class GroupHelper:
                 id = element.find_element(By.NAME, "selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
-
-
-
-
-
-
