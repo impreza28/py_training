@@ -17,6 +17,7 @@ class ContactHelper:
         self.contact_fields_filling(contact)
         with allure.step('Нажать кнопку Enter'):
             wd.find_element(By.XPATH, "(//input[@name=\'submit\'])[2]").click()
+        self.contact_cache = None
 
     def contact_fields_filling(self, contact):
         wd = self.app.wd
@@ -54,6 +55,7 @@ class ContactHelper:
         with allure.step('Нажать кнопку ОК в сообщении "Delete 1 addresses?"'):
             wd.switch_to.alert.accept()
         WebDriverWait(wd, 10).until(lambda x: x.find_element(By.ID, "maintable"))
+        self.contact_cache = None
 
     def modify_contact(self, contact):
         wd = self.app.wd
@@ -62,6 +64,7 @@ class ContactHelper:
         self.contact_fields_filling(contact)
         with allure.step('Нажать кнопку Update'):
             wd.find_element(By.XPATH, "//input[@name=\'update\']").click()
+        self.contact_cache = None
 
     def open_contact_page(self):
         wd = self.app.wd
@@ -75,25 +78,28 @@ class ContactHelper:
         wd = self.app.wd
         return len(wd.find_elements(By.NAME, "selected[]"))
 
+    contact_cache = None
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_contact_page()
-        list_contacts = []
-        m = 1
-        for element in wd.find_elements(By.NAME, "entry"):
-            text = element.text
-            #firstname = element.find_element(By.XPATH, f"//[@id=\"maintable\"]/tbody/tr[{m + 1}]/td[3]").text
-            #lastname = element.find_element(By.XPATH, f"//[@id=\"maintable\"]/tbody/tr[{m + 1}]/td[2]").text
-            lastname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m+1}) > td:nth-child(2)").text
-            firstname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m+1}) > td:nth-child(3)").text
-            id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-            # list_contact.append(Contact(contact_row=text, id=id))
-            list_contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
-            m += 1
+        if self.contact_cache is None:
+
+            wd = self.app.wd
+            self.open_contact_page()
+            self.contact_cache = []
+            m = 1
+            for element in wd.find_elements(By.NAME, "entry"):
+                text = element.text
+                #firstname = element.find_element(By.XPATH, f"//[@id=\"maintable\"]/tbody/tr[{m + 1}]/td[3]").text
+                #lastname = element.find_element(By.XPATH, f"//[@id=\"maintable\"]/tbody/tr[{m + 1}]/td[2]").text
+                lastname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m+1}) > td:nth-child(2)").text
+                firstname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m+1}) > td:nth-child(3)").text
+                id = element.find_element(By.NAME, "selected[]").get_attribute("value")
+                # list_contact.append(Contact(contact_row=text, id=id))
+                self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
+                m += 1
             # maintable > tbody > tr:nth-child(2) > td:nth-child(2)
             # maintable > tbody > tr.odd > td:nth-child(2)
 
-        return list_contacts
+        return list(self.contact_cache)
 
     # for element in wd.find_elements(By.NAME, "entry"):
     #    firstname = element.find_element(By.XPATH, "//*[@id=\'maintable\']/tbody/tr/td[2]").text
