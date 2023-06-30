@@ -19,7 +19,7 @@ def test_delete_contact(app):
 
     new_contacts = app.contact.get_contact_list()
 
-    assert (len(old_contacts)-1) == len(new_contacts), "Количество контактов не соответствует"
+    assert (len(old_contacts)-1) == len(new_contacts), "Количество контактов не совпадает"
 
     old_contacts.pop(index)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts,

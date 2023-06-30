@@ -15,7 +15,7 @@ class Contact:
             and (self.middlename is None or other.middlename is None or self.middlename == other.middlename)
 
     def __repr__(self):
-        return "%s:%s" % (self.id, self.contact_row)
+        return "%s; %s; %s" % (self.id, self.lastname, self.firstname)
 
     def id_or_max(self):
         if self.id:

@@ -21,6 +21,7 @@ class ContactHelper:
 
     def contact_fields_filling(self, contact):
         wd = self.app.wd
+        WebDriverWait(wd, 10).until(lambda x: x.find_element(By.XPATH, "//form[@action=\'edit.php\']"))
         if contact.firstname is not None:
             with allure.step('Ввести firstname'):
                 wd.find_element(By.NAME, "firstname").clear()
@@ -48,8 +49,9 @@ class ContactHelper:
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
-        with allure.step('Выбрать первый контакт'):
+        with allure.step(f'Выбрать контакт с индексом {index}'):
             wd.find_elements(By.NAME, "selected[]")[index].click()
+            #WebDriverWait(wd, 30).until(lambda x: x.find_element(By.NAME, "selected[]")[index].is_selected())
 
     def delete_contact(self):
         wd = self.app.wd
@@ -57,13 +59,15 @@ class ContactHelper:
             wd.find_element(By.XPATH, "//input[@value=\'Delete\']").click()
         with allure.step('Нажать кнопку ОК в сообщении "Delete 1 addresses?"'):
             wd.switch_to.alert.accept()
-        WebDriverWait(wd, 10).until(lambda x: x.find_element(By.ID, "maintable"))
+        WebDriverWait(wd, 10).until(lambda x: x.find_element(By.CSS_SELECTOR, ".msgbox"))
         self.contact_cache = None
 
-    def modify_contact(self, contact):
+
+    def modify_contact(self, contact, index, id):
         wd = self.app.wd
-        with allure.step('Выбрать первый контакт'):
-            wd.find_element(By.XPATH, "//img[@alt=\'Edit\']").click()
+        self.select_contact_by_index(index)
+        with allure.step('У выбранного контакта нажать Edit'):
+            wd.find_element(By.XPATH, f"//a[@href=\'edit.php?id={id}\']").click()
         self.contact_fields_filling(contact)
         with allure.step('Нажать кнопку Update'):
             wd.find_element(By.XPATH, "//input[@name=\'update\']").click()
