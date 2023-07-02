@@ -63,11 +63,10 @@ class ContactHelper:
         self.contact_cache = None
 
 
-    def modify_contact(self, contact, index, id):
+    def modify_contact(self, contact, id_contact):
         wd = self.app.wd
-        self.select_contact_by_index(index)
         with allure.step('У выбранного контакта нажать Edit'):
-            wd.find_element(By.XPATH, f"//a[@href=\'edit.php?id={id}\']").click()
+            wd.find_element(By.XPATH, f"//a[@href=\'edit.php?id={id_contact}\']").click()
         self.contact_fields_filling(contact)
         with allure.step('Нажать кнопку Update'):
             wd.find_element(By.XPATH, "//input[@name=\'update\']").click()

@@ -14,7 +14,8 @@ def test_modify_contact(app):
     index = randrange(len(old_contacts))
     new_contact = Contact(firstname="New firstname", lastname="New lastname")
     new_contact.id = old_contacts[index].id
-    app.contact.modify_contact(new_contact, index, old_contacts[index].id)
+    app.contact.select_contact_by_index(index)
+    app.contact.modify_contact(new_contact, old_contacts[index].id)
     app.contact.return_to_home_page()
 
     new_contacts = app.contact.get_contact_list()
