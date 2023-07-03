@@ -13,11 +13,13 @@ class SessionHelper:
         wd = self.app.wd
         self.app.open_home_page()
         with allure.step('Ввести логин'):
+            wd.find_element(By.NAME, "user").clear()
             wd.find_element(By.NAME, "user").send_keys(username)
         with allure.step('Ввести пароль'):
+            wd.find_element(By.NAME, "pass").clear()
             wd.find_element(By.NAME, "pass").send_keys(password)
         with allure.step('Нажать кнопку Login'):
-            wd.find_element(By.XPATH, "//input[@value=\'Login\']").click()
+            wd.find_element(By.XPATH, '//input[@value="Login"]').click()
 
     def logout(self):
         wd = self.app.wd
@@ -35,7 +37,11 @@ class SessionHelper:
             self.logout()
     def is_logged_in_as(self, username):
         wd = self.app.wd
-        return wd.find_element_by_xpath("//div/div[1]/form/b").text =="("+username+")"
+        return self.get_logged_user == username
+
+    def get_logged_user(self):
+        wd = self.app.wd
+        return wd.find_element_by_xpath("//div/div[1]/form/b").text[1:-1]
 
     def ensure_login(self, username, password):
         wd = self.app.wd

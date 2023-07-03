@@ -2,11 +2,18 @@ from sys import maxsize
 
 
 class Contact:
-    def __init__(self, firstname, lastname, middlename=None, id=None):
+    def __init__(self, firstname=None, lastname=None, middlename=None, id=None, homephone= None, mobilephone = None, workphone = None, secondaryphone = None,
+                 all_phones_from_home_page=None):
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
         self.id = id
+        self.homephone = homephone
+        self.mobilephone = mobilephone
+        self.workphone = workphone
+        self.secondaryphone = secondaryphone
+        self.all_phones_from_home_page= all_phones_from_home_page
+
         #self.contact_row = contact_row
 
     def __eq__(self, other):
