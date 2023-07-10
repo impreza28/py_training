@@ -8,8 +8,10 @@ data = [Group(name="", header="", footer="")] + [
           footer=random_string("footer", 10))
     for i in range(5)]
 
-f = "data/group_gen.json"
-convert_json = jsonpickle.encode(data)
+f = "data/json_group_gen.json"
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
-with open(file, "w") as out: out.write(convert_json)
+
+with open(file, "w") as out:
+    jsonpickle.set_encoder_options("json", indent=2)
+    out.write(jsonpickle.encode(data))

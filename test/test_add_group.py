@@ -30,8 +30,8 @@ from data.groups import testdata as data_groups
 
 @allure.epic("Тесты добавления группы")
 @allure.description("Авторизация и добавление новой группы")
-def test_add_group_gen(app, data_groups):
-    group = data_groups
+def test_add_group_gen(app, json_groups):
+    group = json_groups
     old_groups = app.group.get_group_list()
     app.group.open_group_page()
     app.group.create_group(group)
