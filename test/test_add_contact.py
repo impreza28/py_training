@@ -30,6 +30,18 @@ def test_add_contact_random(app, contact):
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts,
                                                                  key=Contact.id_or_max), "Отсортированные списки не совпадают"
 
+@allure.description("Авторизация и добавление нового контакта( из json)")
+def test_add_contact_jsondata(app, json_contacts):
+    app.contact.open_contact_page()
+    old_contacts = app.contact.get_contact_list()
+    app.contact.create_contact(json_contacts)
+    app.contact.return_to_home_page()
+    new_contacts = app.contact.get_contact_list()
+    assert len(old_contacts) + 1 == len(new_contacts), "Количество контактов до добавления и после не соответствует"
+
+    old_contacts.append(json_contacts)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts,
+                                                                 key=Contact.id_or_max), "Отсортированные списки не совпадают"
 
 #@allure.description("Авторизация и добавление нового контакта")
 #def test_add_contact(app):
