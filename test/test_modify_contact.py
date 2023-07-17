@@ -28,7 +28,7 @@ def test_modify_contact(app):
 
 
 @allure.description("Авторизация и изменение контакта (с БД")
-def test_modify_contact(app, db, check_ui):
+def test_modify_contact_with_db_check(app, db, check_ui):
     app.contact.open_contact_page()
     if app.contact.count_contacts() == 0:
         app.contact.create_contact(Contact(firstname="firstname1", middlename="middlename1", lastname="lastname1"))
