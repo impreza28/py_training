@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import allure
 from model.group import Group
-
+from selenium.webdriver.support.wait import WebDriverWait
 
 class GroupHelper:
     def __init__(self, app):
@@ -77,6 +77,7 @@ class GroupHelper:
         wd = self.app.wd
         with allure.step('Нажать на кнопку Edit group'):
             wd.find_element(By.NAME, "edit").click()
+        WebDriverWait(wd, 10).until(lambda x: x.find_element(By.NAME, "group_name"))
         self.fill_group_form(group)
         with allure.step('Нажать кнопку Update'):
             wd.find_element(By.NAME, "update").click()

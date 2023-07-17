@@ -53,6 +53,11 @@ class ContactHelper:
         with allure.step(f'Выбрать контакт с индексом {index}'):
             wd.find_elements(By.NAME, "selected[]")[index].click()
             # WebDriverWait(wd, 30).until(lambda x: x.find_element(By.NAME, "selected[]")[index].is_selected())
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        with allure.step(f'Выбрать контакт с id= {id}'):
+            wd.find_element(By.ID, f"{id}").click()
+            # WebDriverWait(wd, 30).until(lambda x: x.find_element(By.NAME, "selected[]")[index].is_selected())
 
     def delete_contact(self):
         wd = self.app.wd
