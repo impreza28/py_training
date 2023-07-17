@@ -26,7 +26,7 @@ def test_add_group_gen(app, json_groups):
 
 
 @allure.description("Авторизация и добавление новой группы (БД)")
-def test_add_group_with_db_check(app, json_groups, db):
+def test_add_group_with_db_check(app, json_groups, db,check_ui):
     group = json_groups
     old_groups = db.get_group_list()
     app.group.open_group_page()
@@ -37,5 +37,9 @@ def test_add_group_with_db_check(app, json_groups, db):
 
     old_groups.append(group)
     assert sorted(old_groups, key = Group.id_or_max) == sorted(new_groups,  key = Group.id_or_max)
+
+    if check_ui:
+        assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)
+
 
 
