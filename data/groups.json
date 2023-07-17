@@ -1,38 +1,37 @@
 [
   {
+    "py/object": "model.group.Group",
     "name": "",
     "header": "",
     "footer": "",
     "id": null
   },
   {
-    "name": "nameutnM5i53",
-    "header": "headert",
-    "footer": "footer",
+    "py/object": "model.group.Group",
+    "name": "name",
+    "header": "headerfb",
+    "footer": "footerMSyBxq7N ",
     "id": null
   },
   {
-    "name": "nameW",
-    "header": "headerK ",
-    "footer": "footertwL8 ",
+    "py/object": "model.group.Group",
+    "name": "name5I",
+    "header": "headerOND",
+    "footer": "footerL6G4",
     "id": null
   },
   {
-    "name": "named",
-    "header": "headerF5oDJgL ",
-    "footer": "footer",
+    "py/object": "model.group.Group",
+    "name": "namesF tn5cW",
+    "header": "headerv ",
+    "footer": "footeriooq0",
     "id": null
   },
   {
-    "name": "name BCq",
+    "py/object": "model.group.Group",
+    "name": "nameZdCA",
     "header": "header",
-    "footer": "footer",
-    "id": null
-  },
-  {
-    "name": "nameLM97x QW",
-    "header": "header",
-    "footer": "footerd",
+    "footer": "footerI",
     "id": null
   }
 ]

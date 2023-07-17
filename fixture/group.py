@@ -50,7 +50,19 @@ class GroupHelper:
             wd.find_element(By.NAME, "delete").click()
         self.return_to_groups_page()
         self.group_cache = None
+    def delete_group_by_id(self, id):
+        wd = self.app.wd
+        with allure.step('Перейти в Группы'):
+            wd.find_element(By.LINK_TEXT, "groups").click()
+        self.select_group_by_id(id)
+        with allure.step('Нажать кнопку Delete group'):
+            wd.find_element(By.NAME, "delete").click()
+        self.return_to_groups_page()
+        self.group_cache = None
 
+    def select_group_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element(By.CSS_SELECTOR, f"input[value='{id}']").click()
     def select_group_by_index(self, index):
         with allure.step('Выбрать группу'):
             wd = self.app.wd
