@@ -111,18 +111,14 @@ class ContactHelper:
                 lastname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(2)").text
                 firstname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(3)").text
                 id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-                #allphones = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(6)").text.splitlines()
-                allphones = wd.find_element(By.CSS_SELECTOR,
-                                            f"tr:nth-child({m + 1}) > td:nth-child(6)").text
-                all_emails = wd.find_element(By.CSS_SELECTOR,
-                                            f"tr:nth-child({m + 1}) > td:nth-child(5)").text
-                address = wd.find_element(By.CSS_SELECTOR,
-                                            f"tr:nth-child({m + 1}) > td:nth-child(4)").text
+                allphones = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(6)").text
+                all_emails = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(5)").text
+                address = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(4)").text
                 self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id, all_phones_from_home_page=allphones,
                                                   all_emails_from_home_page=all_emails, address=address))
                 m += 1
-
         return list(self.contact_cache)
+
 
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
@@ -140,7 +136,6 @@ class ContactHelper:
         email = wd.find_element(By.NAME,"email").get_attribute("value")
         email2 = wd.find_element(By.NAME, "email2").get_attribute("value")
         email3 = wd.find_element(By.NAME, "email3").get_attribute("value")
-
 
         return Contact(firstname=firstname, lastname=lastname, id=id, homephone=homephone, mobilephone=mobilephone,
                        workphone=workphone, secondaryphone=secondaryphone, email=email, email2=email2, email3=email3, address=address)
