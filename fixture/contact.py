@@ -162,4 +162,24 @@ class ContactHelper:
         return Contact(homephone=homephone, mobilephone=mobilephone,
                        workphone=workphone, secondaryphone=secondaryphone)
 
+    def add_contact_to_group(self):
+        with allure.step('Нажать кнопку Add to'):
+            wd = self.app.wd
+            wd.find_element(By.NAME, "add").click()
+            WebDriverWait(wd, 10).until(lambda x: x.find_element(By.CSS_SELECTOR, ".msgbox"))
+
+
+    def select_group_for_add_contact(self, index):
+        with allure.step('Выбрать группу по индексу'):
+            wd = self.app.wd
+            wd.find_element(By.NAME, "to_group").click()
+            wd.find_element(By.XPATH, f"//div[@class='right']//option[@value='{index}']").click()
+
+    def open_group_page_with_contacts(self, index):
+        with allure.step('Перейти на страницу группы'):
+            wd = self.app.wd
+            wd.find_element(By.XPATH, f"//a[@href='./?group={index}']").click()
+
+
+
 

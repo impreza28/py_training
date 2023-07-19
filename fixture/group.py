@@ -113,3 +113,8 @@ class GroupHelper:
                 id = element.find_element(By.NAME, "selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
+    def del_contact_from_group(self):
+        wd = self.app.wd
+        with allure.step(f'Нажать кнопку Remove from "id"'):
+            wd.find_element(By.NAME, "remove").click()
+
