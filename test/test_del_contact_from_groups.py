@@ -1,8 +1,10 @@
+
 from model.contact import Contact
 from model.group import Group
 import random
 
-def test_add_contact_in_group_with_db(app, db):
+
+def test_del_contact_from_group_with_db(app, db):
     app.contact.open_contact_page()
 
     if db.get_contact_count() == 0:
@@ -13,8 +15,10 @@ def test_add_contact_in_group_with_db(app, db):
         app.group.open_group_page()
         app.group.create_group(Group(name="name группа", header="header группа", footer="footer группа"))
 
-    # очистить таблицу address_in_groups от данных
-    db.clear_table_address_in_groups()
+    if db.get_count_group_with_contact() > 0:
+        # очистить таблицу address_in_groups от данных
+        db.clear_table_address_in_groups()
+
     # выбрать контакт
     selected_contact = random.choice(app.contact.get_contact_list())
     # выбрать группу
@@ -27,5 +31,12 @@ def test_add_contact_in_group_with_db(app, db):
     assert str(contact_in_group[0]) == selected_contact.id and str(
         contact_in_group[1]) == selected_group.id, "Контакт не добавлен в группу"
 
+    # отметить чекбокс контакта
+    app.contact.select_contact_by_id(selected_contact.id)
+    # удалить контакт из группы
+    app.group.del_contact_from_group()
 
+    # проверить удаление контакта из группы через БД
+    contact_in_group = db.get_contact_in_group_by_id(selected_group.id, selected_contact.id)
+    assert len(contact_in_group) == 0, "Контакт не удален из группы"
 

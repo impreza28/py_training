@@ -22,6 +22,18 @@ class DbFixture:
             cursor.close()
         return group_list
 
+    def get_group_count(self):
+        group_list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select group_id from group_list")
+            for row in cursor:
+                (id) = row
+                group_list.append(Group(id=id))
+        finally:
+            cursor.close()
+        return len(group_list)
+
     def get_contact_list(self):
         contact_list = []
         cursor = self.connection.cursor()
@@ -33,6 +45,18 @@ class DbFixture:
         finally:
             cursor.close()
         return contact_list
+
+    def get_contact_count(self):
+        contact_list = []
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("select id from addressbook where deprecated='0000-00-00 00:00:00'")
+            for row in cursor:
+                (id) = row
+                contact_list.append(Contact(id=id))
+        finally:
+            cursor.close()
+        return len(contact_list)
 
     def get_contact_list_full_info(self):
         contact_list = []
@@ -66,6 +90,29 @@ class DbFixture:
         finally:
             cursor.close()
         return list_contacts_in_group
+
+    def get_count_group_with_contact(self):
+        list_contacts_in_group=[]
+        cursor = self.connection.cursor()
+        try:
+
+            cursor.execute(f"SELECT id FROM address_in_groups")
+            for row in cursor:
+                (id) = row
+                list_contacts_in_group.append(id)
+        finally:
+            cursor.close()
+        return len(list_contacts_in_group)
+
+    def clear_table_address_in_groups(self):
+        list_contacts_in_group=[]
+        cursor = self.connection.cursor()
+        try:
+            cursor.execute("delete FROM address_in_groups")
+        finally:
+            cursor.close()
+
+
 
 
     def clean(self, group):
