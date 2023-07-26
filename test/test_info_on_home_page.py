@@ -33,17 +33,11 @@ def test_info_on_home_page_with_db(app, db):
     assert len(contact_from_home_page) == len(contact_from_db), "Кол-во контактов на странице не совпадает с кол-вом контактов из БД"
 
     for i in range(len(contact_from_home_page)):
-        for j in range(len(contact_from_home_page)):
-            assert contact_from_home_page[i].firstname == contact_from_db[i].firstname, "firstname не совпадают"
-            assert contact_from_home_page[i].lastname == contact_from_db[i].lastname, "lastname не совпадают"
-            assert contact_from_home_page[i].address == contact_from_db[i].address, "Адресы не совпадают"
-            assert contact_from_home_page[i].all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_db[i]), "emails не совпадают"
-            assert contact_from_home_page[i].all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db[i]), "all_phones не совпадают"
-
-            #assert clear(contact_from_home_page[i].all_emails_from_home_page) == clear(contact_from_db[i].all_emails_from_home_page), "emails не совпадают"
-            #assert clear(contact_from_home_page[i].all_phones_from_home_page) == clear(contact_from_db[i].all_phones_from_home_page),"all_phones не совпадают"
-
-
+        assert contact_from_home_page[i].firstname == contact_from_db[i].firstname, "firstname не совпадают"
+        assert contact_from_home_page[i].lastname == contact_from_db[i].lastname, "lastname не совпадают"
+        assert contact_from_home_page[i].address == contact_from_db[i].address, "Адресы не совпадают"
+        assert contact_from_home_page[i].all_emails_from_home_page == merge_emails_like_on_home_page(contact_from_db[i]), "emails не совпадают"
+        assert contact_from_home_page[i].all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db[i]), "all_phones не совпадают"
 
 
 
