@@ -19,7 +19,7 @@
   {
     "py/object": "model.contact.Contact",
     "firstname": "firstnamea 8",
-    "middlename": "middlenamewrFK4 ",
+    "middlename": "middlenamewrFK4",
     "lastname": "lastname",
     "id": null,
     "homephone": null,
@@ -37,7 +37,7 @@
     "py/object": "model.contact.Contact",
     "firstname": "firstname JdtdUJ",
     "middlename": "middlenameV",
-    "lastname": "lastname ",
+    "lastname": "lastname",
     "id": null,
     "homephone": null,
     "mobilephone": null,
@@ -52,7 +52,7 @@
   },
   {
     "py/object": "model.contact.Contact",
-    "firstname": "firstname ",
+    "firstname": "firstname",
     "middlename": "middlename2PS44iU",
     "lastname": "lastnameKvp dRET",
     "id": null,

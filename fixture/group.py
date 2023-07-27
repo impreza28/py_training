@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import allure
 from model.group import Group
-
+from selenium.webdriver.support.wait import WebDriverWait
 
 class GroupHelper:
     def __init__(self, app):
@@ -50,7 +50,19 @@ class GroupHelper:
             wd.find_element(By.NAME, "delete").click()
         self.return_to_groups_page()
         self.group_cache = None
+    def delete_group_by_id(self, id):
+        wd = self.app.wd
+        with allure.step('Перейти в Группы'):
+            wd.find_element(By.LINK_TEXT, "groups").click()
+        self.select_group_by_id(id)
+        with allure.step('Нажать кнопку Delete group'):
+            wd.find_element(By.NAME, "delete").click()
+        self.return_to_groups_page()
+        self.group_cache = None
 
+    def select_group_by_id(self,id):
+        wd = self.app.wd
+        wd.find_element(By.CSS_SELECTOR, f"input[value='{id}']").click()
     def select_group_by_index(self, index):
         with allure.step('Выбрать группу'):
             wd = self.app.wd
@@ -65,6 +77,7 @@ class GroupHelper:
         wd = self.app.wd
         with allure.step('Нажать на кнопку Edit group'):
             wd.find_element(By.NAME, "edit").click()
+        WebDriverWait(wd, 10).until(lambda x: x.find_element(By.NAME, "group_name"))
         self.fill_group_form(group)
         with allure.step('Нажать кнопку Update'):
             wd.find_element(By.NAME, "update").click()
@@ -100,3 +113,8 @@ class GroupHelper:
                 id = element.find_element(By.NAME, "selected[]").get_attribute("value")
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
+    def del_contact_from_group(self):
+        wd = self.app.wd
+        with allure.step(f'Нажать кнопку Remove from "id"'):
+            wd.find_element(By.NAME, "remove").click()
+

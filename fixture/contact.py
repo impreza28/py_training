@@ -54,6 +54,12 @@ class ContactHelper:
             wd.find_elements(By.NAME, "selected[]")[index].click()
             # WebDriverWait(wd, 30).until(lambda x: x.find_element(By.NAME, "selected[]")[index].is_selected())
 
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        with allure.step(f'Выбрать контакт с id= {id}'):
+            wd.find_element(By.ID, f"{id}").click()
+            # WebDriverWait(wd, 30).until(lambda x: x.find_element(By.NAME, "selected[]")[index].is_selected())
+
     def delete_contact(self):
         wd = self.app.wd
         with allure.step('Нажать кнопку Delete'):
@@ -63,13 +69,12 @@ class ContactHelper:
         WebDriverWait(wd, 10).until(lambda x: x.find_element(By.CSS_SELECTOR, ".msgbox"))
         self.contact_cache = None
 
-    def open_contact_to_edit_by_index(self,index):
+    def open_contact_to_edit_by_index(self, index):
         wd = self.app.wd
-        row = wd.find_elements(By.NAME,"entry")[index]
+        row = wd.find_elements(By.NAME, "entry")[index]
         cell = row.find_elements(By.TAG_NAME, "td")[7]
         cell.find_element(By.TAG_NAME, "a").click()
         WebDriverWait(wd, 10).until(lambda x: x.find_element(By.XPATH, "//form[@action='edit.php']"))
-
 
     def modify_contact(self, contact, id_contact):
         wd = self.app.wd
@@ -88,7 +93,6 @@ class ContactHelper:
         with allure.step('Нажать на ссылку Home для перехода на главную страницу'):
             wd.find_element(By.LINK_TEXT, "home").click()
 
-
     def count_contacts(self):
         wd = self.app.wd
         return len(wd.find_elements(By.NAME, "selected[]"))
@@ -106,17 +110,13 @@ class ContactHelper:
                 lastname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(2)").text
                 firstname = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(3)").text
                 id = element.find_element(By.NAME, "selected[]").get_attribute("value")
-                #allphones = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(6)").text.splitlines()
-                allphones = wd.find_element(By.CSS_SELECTOR,
-                                            f"tr:nth-child({m + 1}) > td:nth-child(6)").text
-                all_emails = wd.find_element(By.CSS_SELECTOR,
-                                            f"tr:nth-child({m + 1}) > td:nth-child(5)").text
-                address = wd.find_element(By.CSS_SELECTOR,
-                                            f"tr:nth-child({m + 1}) > td:nth-child(4)").text
-                self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id, all_phones_from_home_page=allphones,
-                                                  all_emails_from_home_page=all_emails, address=address))
+                allphones = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(6)").text
+                all_emails = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(5)").text
+                address = wd.find_element(By.CSS_SELECTOR, f"tr:nth-child({m + 1}) > td:nth-child(4)").text
+                self.contact_cache.append(
+                    Contact(firstname=firstname, lastname=lastname, id=id, all_phones_from_home_page=allphones,
+                            all_emails_from_home_page=all_emails, address=address))
                 m += 1
-
         return list(self.contact_cache)
 
     def get_contact_info_from_edit_page(self, index):
@@ -124,21 +124,21 @@ class ContactHelper:
         self.open_contact_page()
         self.open_contact_to_edit_by_index(index)
 
-        firstname = wd.find_element(By.NAME,"firstname").get_attribute("value")
-        lastname = wd.find_element(By.NAME,"lastname").get_attribute("value")
-        id = wd.find_element(By.NAME,"id").get_attribute("value")
-        address = wd.find_element(By.NAME,"address").text
-        homephone = wd.find_element(By.NAME,"home").get_attribute("value")
-        mobilephone = wd.find_element(By.NAME,"mobile").get_attribute("value")
-        workphone = wd.find_element(By.NAME,"work").get_attribute("value")
-        secondaryphone = wd.find_element(By.NAME,"phone2").get_attribute("value")
-        email = wd.find_element(By.NAME,"email").get_attribute("value")
+        firstname = wd.find_element(By.NAME, "firstname").get_attribute("value")
+        lastname = wd.find_element(By.NAME, "lastname").get_attribute("value")
+        id = wd.find_element(By.NAME, "id").get_attribute("value")
+        address = wd.find_element(By.NAME, "address").text
+        homephone = wd.find_element(By.NAME, "home").get_attribute("value")
+        mobilephone = wd.find_element(By.NAME, "mobile").get_attribute("value")
+        workphone = wd.find_element(By.NAME, "work").get_attribute("value")
+        secondaryphone = wd.find_element(By.NAME, "phone2").get_attribute("value")
+        email = wd.find_element(By.NAME, "email").get_attribute("value")
         email2 = wd.find_element(By.NAME, "email2").get_attribute("value")
         email3 = wd.find_element(By.NAME, "email3").get_attribute("value")
 
-
         return Contact(firstname=firstname, lastname=lastname, id=id, homephone=homephone, mobilephone=mobilephone,
-                       workphone=workphone, secondaryphone=secondaryphone, email=email, email2=email2, email3=email3, address=address)
+                       workphone=workphone, secondaryphone=secondaryphone, email=email, email2=email2, email3=email3,
+                       address=address)
 
     def open_contact_view_by_index(self, index):
         wd = self.app.wd
@@ -153,7 +153,7 @@ class ContactHelper:
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_view_by_index(index)
-        text = wd.find_element(By.ID,"content").text
+        text = wd.find_element(By.ID, "content").text
         homephone = re.search("H: (.*)", text).group(1)
         workphone = re.search("W: (.*)", text).group(1)
         mobilephone = re.search("M: (.*)", text).group(1)
@@ -162,4 +162,25 @@ class ContactHelper:
         return Contact(homephone=homephone, mobilephone=mobilephone,
                        workphone=workphone, secondaryphone=secondaryphone)
 
+    def init_add_contact_to_group(self):
+        with allure.step('Нажать кнопку Add to'):
+            wd = self.app.wd
+            wd.find_element(By.NAME, "add").click()
+            WebDriverWait(wd, 10).until(lambda x: x.find_element(By.CSS_SELECTOR, ".msgbox"))
 
+    def select_group_for_add_contact(self, index):
+        with allure.step('Выбрать группу по индексу'):
+            wd = self.app.wd
+            wd.find_element(By.NAME, "to_group").click()
+            wd.find_element(By.XPATH, f"//div[@class='right']//option[@value='{index}']").click()
+
+    def open_group_page_with_contacts(self, index):
+        with allure.step('Перейти на страницу группы'):
+            wd = self.app.wd
+            wd.find_element(By.XPATH, f"//a[@href='./?group={index}']").click()
+
+    def add_contact_in_group(self, contact_id, group_id):
+            self.select_contact_by_id(contact_id)
+            self.select_group_for_add_contact(group_id)
+            self.init_add_contact_to_group()
+            self.open_group_page_with_contacts(group_id)
