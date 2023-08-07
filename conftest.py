@@ -1,10 +1,7 @@
 import json
 import os.path
-
 import jsonpickle
 import pytest
-import allure
-from model.group import Group
 from fixture.application import Application
 from fixture.db import DbFixture
 import importlib
