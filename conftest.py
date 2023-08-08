@@ -1,11 +1,11 @@
 import json
 import os.path
-import jsonpickle
 import pytest
 from fixture.application import Application
 from fixture.db import DbFixture
 import importlib
 import os.path
+import jsonpickle
 
 fixture = None
 target = None
