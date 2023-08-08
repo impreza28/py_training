@@ -30,10 +30,8 @@ class Application:
         self.wd.quit()
 
     def open_home_page(self):
-        with allure.step('Открытие страницы addressbook'):
-            self.wd.get(self.base_url)
-        with allure.step('Открытие окна браузера на полный экран'):
-            self.wd.set_window_size(2062, 1126)
+        self.wd.get(self.base_url)
+        self.wd.set_window_size(2062, 1126)
 
     def is_valid(self):
         try:
